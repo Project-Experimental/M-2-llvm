@@ -21,7 +21,16 @@
 
 #if defined(__GNUC__) || defined(__clang__) || defined(_MSC_VER)
 
+#if !defined(__M2__)
 #include <assert.h>
+#else
+#ifdef NDEBUG
+#define assert(x) ((void)0)
+#else
+#define assert(x) ((x) ? (void)0 : __builtin_trap())
+#endif
+#define static_assert _Static_assert
+#endif
 
 #if (defined(__GNUC__) || defined(__clang__)) && !defined(_MSC_VER)
 #include <cpuid.h>

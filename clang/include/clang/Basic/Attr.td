@@ -1108,6 +1108,7 @@ def Availability : InheritableAttr {
              .Case("swift", "Swift")
              .Case("shadermodel", "Shader Model")
              .Case("ohos", "OpenHarmony OS")
+             .Case("m2", "Project M-2")
              .Default(llvm::StringRef());
 }
 static llvm::StringRef getPlatformNameSourceSpelling(llvm::StringRef Platform) {

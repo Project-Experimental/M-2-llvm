@@ -1052,6 +1052,22 @@ public:
   }
 };
 
+template<typename Target>
+class LLVM_LIBRARY_VISIBILITY M2TargetInfo : public OSTargetInfo<Target> {
+  void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple, MacroBuilder &Builder) const override {
+    this->PlatformName = "m2";
+    Builder.defineMacro("__m2__");
+    Builder.defineMacro("__M2__");
+    Builder.defineMacro("__ELF__");
+  }
+public:
+  M2TargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
+    : OSTargetInfo<Target>(Triple, Opts) {
+    this->WIntType = TargetInfo::UnsignedInt;
+    this->MCountName = "__mcount";
+  }
+};
+
 } // namespace targets
 } // namespace clang
 #endif // LLVM_CLANG_LIB_BASIC_TARGETS_OSTARGETS_H
