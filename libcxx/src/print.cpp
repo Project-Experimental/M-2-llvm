@@ -58,7 +58,9 @@ __write_to_windows_console([[maybe_unused]] FILE* __stream, [[maybe_unused]] wst
 
 #elif __has_include(<unistd.h>) // !_LIBCPP_WIN32API
 
+#if !defined(__M2__)
 _LIBCPP_EXPORTED_FROM_ABI bool __is_posix_terminal(FILE* __stream) { return isatty(fileno(__stream)); }
+#endif
 #endif
 
 _LIBCPP_END_NAMESPACE_STD

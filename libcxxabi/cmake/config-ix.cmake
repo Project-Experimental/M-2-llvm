@@ -95,7 +95,7 @@ endif()
 check_cxx_compiler_flag(-nostdinc++ CXX_SUPPORTS_NOSTDINCXX_FLAG)
 
 # Check libraries
-if(FUCHSIA)
+if(M2 OR FUCHSIA)
   set(LIBCXXABI_HAS_DL_LIB NO)
   set(LIBCXXABI_HAS_PTHREAD_LIB NO)
   check_library_exists(c __cxa_thread_atexit_impl ""
