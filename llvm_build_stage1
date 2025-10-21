@@ -1,0 +1,33 @@
+#!/bin/bash
+echo "=========================="
+echo "       LLVM Builder"
+echo "    by Nakada Tokumei"
+echo "=========================="
+
+export SRC=$(pwd)
+export CLANG_PREFIX=/usr/lib/llvm-20/bin/
+export STAGE1=${SRC}/build_stage1
+export STAGE1_HOME=${HOME}/build_stage1
+export STAGE2=${SRC}/build_stage2
+export SYSROOT=${HOME}/sysroot_m2
+export SYSROOT_USER=${SYSROOT}/usr
+
+function build_llvm_stage1() {
+    if [[ ! -d ${STAGE1} ]]; then
+        mkdir -p ${STAGE1}
+    fi
+
+    cd ${STAGE1}
+
+    ${SYSROOT_USER}/bin/cmake -S ${SRC}/llvm -G Ninja                   \
+        -DCMAKE_C_COMPILER=${CLANG_PREFIX}clang                         \
+        -DCMAKE_CXX_COMPILER=${CLANG_PREFIX}clang++                     \
+        -DCMAKE_INSTALL_PREFIX=${STAGE1_HOME}/usr/                      \
+        -C ${SRC}/clang/cmake/caches/M-2-stage1.cmake
+    
+    ninja -j8
+
+    ninja install
+}
+
+build_llvm_stage1
